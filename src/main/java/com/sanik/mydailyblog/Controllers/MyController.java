@@ -40,7 +40,27 @@ public class MyController {
    }
 
    @GetMapping("/loginPage")
-   public String login(){
+   public String getLogin(Model model){
+        model.addAttribute("user", new User());
         return "login";
+   }
+
+   @PostMapping("/postLogin")
+   public String postLogin(@ModelAttribute("user") User user, Model model){
+        User validUser = userService.logInUser(user.getEmail(), user.getPassword());
+        if(validUser != null){
+            model.addAttribute("userName", validUser.getName());
+            model.addAttribute("userEmail", validUser.getEmail());
+            return "profile";
+        }
+        else {
+            model.addAttribute("errorMsg", "Email Password doesnt match");
+            return "login";
+        }
+   }
+
+   @GetMapping("/profilePage")
+   public String profile(){
+        return "profile";
    }
 }

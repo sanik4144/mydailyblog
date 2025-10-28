@@ -12,6 +12,7 @@
       <a href="/" class="active">Home</a>
       <a href="loginPage">Login</a>
       <a href="regPage">Register</a>
+      <a href="profilePage">Profile</a>
     </nav>
   </header>
 

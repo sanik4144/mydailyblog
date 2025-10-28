@@ -13,6 +13,7 @@
       <a href="/">Home</a>
       <a href="loginPage" class="active">Login</a>
       <a href="regPage">Register</a>
+      <a href="profilePage">Profile</a>
     </nav>
   </header>
 
@@ -20,15 +21,18 @@
     <c:if test="${not empty successMsg}">
        <h4 style="color:green"> ${successMsg} </h4>
      </c:if>
+     <c:if test="${not empty errorMsg}">
+       <h4 style="color:red"> ${errorMsg} </h4>
+     </c:if>
     <h2>Log In</h2>
-    <form action="#" method="post">
+    <form action="postLogin" method="post">
       <label>Email</label>
-      <input type="email" required>
+      <input type="email" name = "email" required>
 
       <label>Password</label>
-      <input type="password" required>
+      <input type="password" name="password" required>
 
-      <button type="submit">Login</button>
+      <a href="profilePage"> <button type="submit">Login</button> </a>
     </form>
     <p>Dont have an account? <a href="regPage">Register here</a>.</p>
   </main>

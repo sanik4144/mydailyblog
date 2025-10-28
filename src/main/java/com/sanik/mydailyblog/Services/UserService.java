@@ -4,4 +4,5 @@ import com.sanik.mydailyblog.Entities.User;
 
 public interface UserService {
     public boolean registerUser(User user);
+    public User logInUser(String email, String password);
 }
