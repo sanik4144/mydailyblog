@@ -14,12 +14,6 @@ public class MyController {
     @Autowired
     private UserService userService;
 
-
-    @GetMapping("/")
-    public String home(){
-        return "index";
-    }
-
     @GetMapping("/regPage")
    public String getRegister(Model model){
        model.addAttribute("user", new User());

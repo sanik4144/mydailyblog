@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - My Blog</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <h1>My Blog</h1>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/loginPage" class="active">Login</a>
+        <a href="/regPage">Register</a>
+        <a href="/profilePage">Profile</a>
+    </nav>
+</header>
+
+<main class="form-container">
+    <div th:if="${successMsg}">
+        <h3 style="color:green;" th:text="${successMsg}"></h3>
+    </div>
+    <div th:if="${errorMsg}">
+        <h3 style="color:red;" th:text="${errorMsg}"></h3>
+    </div>
+    <h2>Log In</h2>
+    <form th:action="@{/postLogin}" th:object="${user}" method="post">
+        <label>Email</label>
+        <input type="email" th:field="*{email}" required>
+
+        <label>Password</label>
+        <input type="password" th:field="*{password}" required>
+
+        <a href="profilePage"> <button type="submit">Login</button> </a>
+    </form>
+    <p>Dont have an account? <a href="/regPage">Register here</a>.</p>
+</main>
+
+<footer>
+    <p>&copy; 2025 My Blog</p>
+</footer>
+</body>
+</html>
