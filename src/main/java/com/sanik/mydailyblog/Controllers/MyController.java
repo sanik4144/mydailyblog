@@ -1,7 +1,9 @@
 package com.sanik.mydailyblog.Controllers;
 
+import com.sanik.mydailyblog.Entities.Blog;
 import com.sanik.mydailyblog.Entities.User;
 import com.sanik.mydailyblog.Services.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,30 +33,5 @@ public class MyController {
             model.addAttribute("failMsg", "Registration Failed. Please Try Again");
             return "register";
         }
-   }
-
-   @GetMapping("/loginPage")
-   public String getLogin(Model model){
-        model.addAttribute("user", new User());
-        return "login";
-   }
-
-   @PostMapping("/postLogin")
-   public String postLogin(@ModelAttribute("user") User user, Model model){
-        User validUser = userService.logInUser(user.getEmail(), user.getPassword());
-        if(validUser != null){
-            model.addAttribute("userName", validUser.getName());
-            model.addAttribute("userEmail", validUser.getEmail());
-            return "profile";
-        }
-        else {
-            model.addAttribute("errorMsg", "Email Password doesnt match");
-            return "login";
-        }
-   }
-
-   @GetMapping("/profilePage")
-   public String profile(){
-        return "profile";
    }
 }

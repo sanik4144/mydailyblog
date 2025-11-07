@@ -24,15 +24,19 @@
     <div th:if="${errorMsg}">
         <h3 style="color:red;" th:text="${errorMsg}"></h3>
     </div>
+    <div th:if="${loginMsg}">
+        <h3 style="color:red;" th:text="${loginMsg}"></h3>
+    </div>
+
     <h2>Log In</h2>
-    <form th:action="@{/postLogin}" th:object="${user}" method="post">
+    <form th:action="@{/loginUser}" th:object="${user}" method="post">
         <label>Email</label>
         <input type="email" th:field="*{email}" required>
 
         <label>Password</label>
         <input type="password" th:field="*{password}" required>
 
-        <a href="profilePage"> <button type="submit">Login</button> </a>
+        <button type="submit">Login</button>
     </form>
     <p>Dont have an account? <a href="/regPage">Register here</a>.</p>
 </main>
