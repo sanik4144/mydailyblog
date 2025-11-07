@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Edit Blog</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+        body{font-family:Arial, sans-serif; padding:20px;}
+        .container{max-width:700px;margin:0 auto;}
+        label{display:block;margin-top:12px;font-weight:600;}
+        input[type="text"], textarea{width:100%;padding:8px;margin-top:6px;box-sizing:border-box;}
+        .actions{margin-top:16px;}
+        button{padding:8px 12px;}
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Edit Blog</h2>
+
+    <!-- Bind the form to the blog object added to model in controller -->
+    <form th:action="@{/updateBlog/{id}(id=${blog.blogId})}" th:object="${blog}" method="post">
+        <!-- If you use CSRF (Spring Security), include the token (Thymeleaf does it automatically if enabled) -->
+        <label for="title">Title</label>
+        <input id="title" type="text" th:field="*{title}" required />
+
+        <label for="description">Description</label>
+        <textarea id="description" rows="8" th:field="*{description}" required></textarea>
+
+        <!-- If you want to show id as hidden field (not necessary because we're using path var) -->
+        <input type="hidden" th:field="*{blogId}" />
+
+        <div class="actions">
+            <button type="submit">Save changes</button>
+            <a th:href="@{/profilePage}" style="margin-left:12px;">Cancel</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

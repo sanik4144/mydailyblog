@@ -5,6 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile - My Blog</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+        }
+        header nav a {
+            color: white;
+            margin-right: 15px;
+            text-decoration: none;
+        }
+        header nav a.active {
+            text-decoration: underline;
+        }
+        main {
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+        }
+        .left-panel, .right-panel {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .left-panel {
+            flex: 1;
+        }
+        .right-panel {
+            flex: 2;
+        }
+        .profile-card, .blog-card {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        .blog-card h4 {
+            margin: 0 0 10px 0;
+        }
+        .blog-actions button {
+            margin-right: 10px;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"], button {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <header>
@@ -17,19 +76,56 @@
     </nav>
 </header>
 
-<main class="profile-container">
-    <h2>User Profile</h2>
-    <div class="profile-card">
-        <div class="profile-info">
+<main style="display:flex; gap:20px; padding:20px; width:100%; box-sizing:border-box;">
+    <!-- Left Side: Profile & Add Blog -->
+    <div class="left-panel">
+        <h2>User Profile</h2>
+        <div class="profile-card">
             <p><strong>Name:</strong> <span th:text="${userName}"></span></p>
             <p><strong>Email:</strong> <span th:text="${userEmail}"></span></p>
 
-            <input type="submit" value="Log Out">
+            <form th:action="@{/logout}" method="get">
+                <input type="submit" value="Log Out">
+            </form>
+        </div>
+
+        <!-- Add Blog Form -->
+        <div class="profile-card">
+            <h3>Add a Blog</h3>
+            <form th:action="@{/saveBlog}" th:object="${blog}" method="post">
+                <label>Title</label>
+                <input type="text" name="title" placeholder="Enter blog title" th:field="*{title}" required>
+
+                <label>Description</label>
+                <textarea name="description" placeholder="Write your blog..." rows="5" th:field="*{description}" required></textarea>
+
+                <input type="submit" value="Post Blog">
+            </form>
+        </div>
+    </div>
+
+    <!-- Right Side: Blog List -->
+    <div class="right-panel">
+        <h2>My Blogs</h2>
+        <div th:each="b : ${blogs}" class="blog-card">
+            <h4 th:text="${b.title}">Blog Title</h4>
+            <p th:text="${b.description}">Blog Description</p>
+            <div class="blog-actions">
+                <form th:action="@{/editBlog/{id}(id=${b.blogId})}" method="get" style="display:inline;">
+                    <button type="submit">Edit</button>
+                </form>
+                <form th:action="@{/deleteBlog/{id}(id=${b.blogId})}" method="post" style="display:inline;">
+                    <button type="submit" onclick="return confirm('Are you sure to delete this blog?')">Delete</button>
+                </form>
+            </div>
+        </div>
+        <div th:if="${#lists.isEmpty(blogs)}">
+            <p>No blogs posted yet.</p>
         </div>
     </div>
 </main>
 
-<footer>
+<footer style="text-align:center; padding:20px; background:#333; color:white;">
     <p>&copy; 2025 My Blog</p>
 </footer>
 </body>
